@@ -37,9 +37,10 @@ test.levelone.prototype = {
         zombieGroup = game.add.group();
         zombieGroup.enableBody = true;
         zombieGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        zombieGroup.setAll("body.gravity.y",400);
         
-         for ( var i = 0; i < 3; i++) {
-             zombieGroup.create(centerX - 400 + (i * 200), centerY + 260, 'zombie');
+         for ( var i = 0; i < 9; i++) {
+             zombieGroup.create(centerX - 400 + (i * 400), centerY + 260, 'zombie');
          }
         
          //bullets setup
@@ -95,8 +96,8 @@ test.levelone.prototype = {
        player.animations.play('jump', 15,false);
         
              
-           if (player.y < 500) {
-               player.y = 500;
+           if (player.y < 400) {
+               player.y = 400;
                 player.animations.play('walk', 12,true);}
            }
 
@@ -109,7 +110,8 @@ test.levelone.prototype = {
          
          //zombie mechanics
          game.physics.arcade.overlap(bullets, zombie, this.hitEnemy);
-
+         game.physics.arcade.overlap(bullets, zombieGroup, this.hitGroup);
+         game.physics.arcade.overlap(player, zombieGroup, this.touchEnemy);
 
      },
     
@@ -130,14 +132,26 @@ test.levelone.prototype = {
         console.log('hit');
         zombie.kill();
         bullet.kill();
-    }
+    },
+    
+    hitGroup: function(b,e) {
+        b.kill();
+        e.kill();
+    },
+    
+    touchEnemy: function(player, enemy) {
+        
+        if(player.x < enemy.x){
+            player.x -= 50;
+        }
+        else if (player.x > enemy.x) {
+            player.x += 50;
+        }
+
+}
 
 };
 
-function touchEnemy(player, enemy) {
 
-player.x *= -1;
-
-}
 
 
