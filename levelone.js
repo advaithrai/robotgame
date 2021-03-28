@@ -1,4 +1,8 @@
-var test = {}, centerX = 1500/2, centerY = 1000/2, player,zombie, zombieGroup, speed = 6, bullets, bullet, velocity = 1000, nextFire = 0, fireRate = 200, ammo = 10;
+var test = {};
+var centerX = 1500/2, centerY = 1000/2, speed = 6, velocity = 1000;
+var player,zombie, zombieGroup;
+var platform, platformGroup;
+var bullets, bullet, nextFire = 0, fireRate = 200, ammo = 10, gearCnt = 5;
 
 test.levelone = function() {};
 
@@ -7,6 +11,7 @@ test.levelone.prototype = {
     
      preload: function(){
          game.load.image('night', 'assets/backgrounds/nightbackground.jpg');
+         game.load.image('platform', 'assets/sprites/platform.png');
          
          game.load.spritesheet('player', 'assets/spritesheets/robot.png', 121, 200);
          game.load.spritesheet('zombie', 'assets/spritesheets/zombie.png', 120, 191);
@@ -23,6 +28,7 @@ test.levelone.prototype = {
         game.world.setBounds(0,0,3000,1000);
          
         var background = game.add.sprite(0,0, 'night');
+        platform = game.add.sprite(500,800, 'platform');
          
          //zombie setup
         zombie = game.add.sprite(centerX - 400, centerY + 260, 'zombie');
@@ -57,7 +63,7 @@ test.levelone.prototype = {
         player.anchor.setTo(0.5,0.1);
         player.scale.setTo(1.25,1.25);
          
-        game.physics.enable(player);
+        game.physics.enable([player, platform]);
         player.body.gravity.y = 400;
         player.body.collideWorldBounds = true;
          
@@ -67,10 +73,14 @@ test.levelone.prototype = {
         
         game.camera.follow(player);
         game.camera.deadzone = new Phaser.Rectangle(centerX - 500, 200, 900,1000);
+         
+        platform.body.immovable = true;
      },
     
      update: function() {
-         
+        
+         //player mechanics
+         game.physics.arcade.collide(platform,player);
          
         //player controls
          if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
@@ -147,8 +157,16 @@ test.levelone.prototype = {
         else if (player.x > enemy.x) {
             player.x += 50;
         }
+    },
+    
+    getGear: function(player, gear) {
+        console.log('gear');
+        gear.kill();
+        gearCnt -= 1;
+        
+    }
 
-}
+
 
 };
 
