@@ -1,6 +1,7 @@
 var test = {};
 var centerX = 1500/2, centerY = 1000/2, speed = 6, velocity = 1000;
-var player,zombie, zombieGroup;
+var player, player_health = 100, collisionRate = 200, nextDamage = 0;
+var zombie, zombieGroup;
 var platform, platformGroup;
 var bullets, bullet, nextFire = 0, fireRate = 200, ammo = 10, gearCnt = 5;
 
@@ -29,6 +30,9 @@ test.levelone.prototype = {
          
         var background = game.add.sprite(0,0, 'night');
         platform = game.add.sprite(500,800, 'platform');
+        platformGroup = game.add.group();
+        platformGroup.create(1000, 800, 'platform');
+        platformGroup.create(1500, 800, 'platform');
          
          //zombie setup
         zombie = game.add.sprite(centerX - 400, centerY + 260, 'zombie');
@@ -43,7 +47,7 @@ test.levelone.prototype = {
         zombieGroup = game.add.group();
         zombieGroup.enableBody = true;
         zombieGroup.physicsBodyType = Phaser.Physics.ARCADE;
-        zombieGroup.setAll("body.gravity.y",400);
+        zombieGroup.setAll("body.gravity.y", 400);
         
          for ( var i = 0; i < 9; i++) {
              zombieGroup.create(centerX - 400 + (i * 400), centerY + 260, 'zombie');
@@ -63,7 +67,7 @@ test.levelone.prototype = {
         player.anchor.setTo(0.5,0.1);
         player.scale.setTo(1.25,1.25);
          
-        game.physics.enable([player, platform]);
+        game.physics.enable([player, platform, platformGroup]);
         player.body.gravity.y = 400;
         player.body.collideWorldBounds = true;
          
@@ -75,33 +79,38 @@ test.levelone.prototype = {
         game.camera.deadzone = new Phaser.Rectangle(centerX - 500, 200, 900,1000);
          
         platform.body.immovable = true;
+        platformGroup.setAll('body.immovable', true);
+        
      },
     
      update: function() {
-        
+         
+
+         
          //player mechanics
-         game.physics.arcade.collide(platform,player);
+         game.physics.arcade.collide(player,[platform, platformGroup]);
          
         //player controls
-         if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-        player.x += speed;
+         
+         if (game.input.keyboard.isDown(Phaser.Keyboard.D)) {
+        player.x += speed; 
         player.scale.setTo(1.25,1.25);
         player.animations.play('walk', 12, true);
      }
          
-         else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+         else if (game.input.keyboard.isDown(Phaser.Keyboard.A)) {
         player.x -= speed;
         player.scale.setTo(-1.25,1.25);
         player.animations.play('walk', 12, true);
      }
-         else if (game.input.keyboard.isDown(Phaser.Keyboard.S) && ammo > 0) {
+         else if (game.input.activePointer.isDown && ammo > 0) {
             player.animations.play('shoot', 12, false);
             this.fire();
             
              
      }
     
-         else if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+         else if (game.input.keyboard.isDown(Phaser.Keyboard.W)) {
             player.y -= 15;
        player.animations.play('jump', 15,false);
         
@@ -128,18 +137,19 @@ test.levelone.prototype = {
     fire: function() {
         if(game.time.now > nextFire) {
         nextFire = game.time.now + fireRate;
-        console.log("fire");
+     //   console.log("fire");
         bullet = bullets.getFirstDead();
         bullet.reset(player.x + 35, player.y + 127);
         
         game.physics.arcade.moveToPointer(bullet, velocity);
+        //bullet.rotation = game.physics.arcade.angleToPointer();
         
         ammo -= 1;
     }
     },
     
     hitEnemy: function(){
-        console.log('hit');
+   //     console.log('hit');
         zombie.kill();
         bullet.kill();
     },
@@ -150,12 +160,18 @@ test.levelone.prototype = {
     },
     
     touchEnemy: function(player, enemy) {
-        
-        if(player.x < enemy.x){
-            player.x -= 50;
-        }
-        else if (player.x > enemy.x) {
-            player.x += 50;
+        if (game.time.now > nextDamage) {
+            nextDamage = game.time.now + collisionRate;
+            
+            if(player.x < enemy.x){
+                player.x -= 100;
+            }
+            else if (player.x > enemy.x) {
+                player.x += 100;
+            }
+            player.y -= 15;
+            player_health -= 10;
+            console.log(player_health);
         }
     },
     
