@@ -1,7 +1,7 @@
 var test = {};
 var centerX = 1500/2, centerY = 1000/2, speed = 6, velocity = 1000;
 var player, player_health = 100, collisionRate = 200, nextDamage = 0, health;
-var zombie, zombieGroup;
+var zombie, zombieGroup, stepLimit = 150, stepCount = 0;
 var platform, platformGroup, boxGroup;
 var bullets, bullet, nextFire = 0, fireRate = 200, ammo = 10, gearCnt = 5, ammoScore;
 var gears, gear, gearCnt = 0, gearScore; 
@@ -41,22 +41,19 @@ test.levelone.prototype = {
         boxGroup.create(2300, 840, 'box');
          
          //zombie setup
-        zombie = game.add.sprite(centerX - 400, centerY + 260, 'zombie');
-        zombie.scale.setTo(-1.25,1.25);
-      
-        game.physics.enable(zombie);
-        zombie.body.gravity.y = 400;
-        zombie.body.collideWorldBounds = true;
-         
-        zombie.animations.add('walk',[0,1,2,3,4,5,6]);
         
         zombieGroup = game.add.group();
         zombieGroup.enableBody = true;
-        zombieGroup.physicsBodyType = Phaser.Physics.ARCADE;
-        zombieGroup.setAll("body.gravity.y", 400);
+        zombieGroup.physicsBodyType = Phaser.Physics.ARCADE;     
         zombieGroup.create(700, centerY + 260, 'zombie');
         zombieGroup.create(1600, 500, 'zombie');
+         zombieGroup.create(1600, centerY + 260, 'zombie');
         zombieGroup.create(2500, centerY + 260, 'zombie');
+        zombieGroup.setAll("body.gravity.y", 400);
+        zombieGroup.setAll("body.collideWorldBounds", true);
+        zombieGroup.setAll("body.velocity.x", 100);
+        zombieGroup.setAll("scale.x", -1);
+        zombieGroup.setAll("scale.y", 1);
         
          //bullets setup
          bullets = game.add.group();
@@ -148,6 +145,17 @@ test.levelone.prototype = {
          game.physics.arcade.overlap(player, zombieGroup, this.touchEnemy);
          game.physics.arcade.collide(zombieGroup,[platformGroup, platform, boxGroup]);
          
+         stepCount++;
+        
+         
+         if (stepCount > stepLimit) {
+             zombieGroup.setAll("body.velocity.x", -1, false, false, 3, false);
+             zombieGroup.setAll("scale.x", -1, false, false, 3, false);
+             stepCount = 0;
+         }
+        
+
+         
          //gear mechanics
          game.physics.arcade.overlap(player, gears, this.getGear);
 
@@ -170,14 +178,6 @@ test.levelone.prototype = {
         }
     },
     
-   /* patrolEnemy: function(z, p) {
-        if (z.body.velocity.x >  0 && z.right > p.right) {
-            z.body.velocity.x *= -1;
-        }
-        else if (z.body.velocity.x < 0 && z.left < p.left) {
-            z.body.velocity.x  *= -1;
-        }
-    }, */
     
     hitEnemy: function(){
    //     console.log('hit');
