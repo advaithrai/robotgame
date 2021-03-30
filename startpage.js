@@ -28,7 +28,7 @@ test.startpage.prototype = {
          var wad = game.add.sprite(1100, 100, 'wad');
          var mouse = game.add.sprite(1100, 200, 'mouse');
          
-         var playButton = game.add.button(500,700, 'play', function() { game.state.start('levelone');})
+         var playButton = game.add.button(500,700, 'play', function() { game.state.start('levelone'); player_health = 100; gearCnt = 0; ammo = 10;})
          
          playButton.scale.setTo(2.5,2.5);
      },
