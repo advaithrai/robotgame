@@ -137,6 +137,14 @@ test.levelone.prototype = {
          
          }
          
+         if (player.x >= 2900) {
+             game.state.start('completionpage');
+         }
+         
+         if (player_health <= 0) {
+             game.state.start('gameover');
+         }
+         
          
          //zombie mechanics
          game.physics.arcade.overlap(bullets, zombie, this.hitEnemy);
