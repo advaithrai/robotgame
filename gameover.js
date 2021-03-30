@@ -15,7 +15,7 @@ test.gameover.prototype = {
          var logo = game.add.sprite(150,400, 'gameover');
          logo.scale.setTo(2,2);
          
-         var bttn = game.add.button(400,800, 'tryagain', function() { game.state.start('startpage');});
+         var bttn = game.add.button(400,800, 'tryagain', function() { game.state.start('startpage'); player_health = 100;});
         
      },
     

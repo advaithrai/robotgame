@@ -40,6 +40,14 @@ test.levelone.prototype = {
         boxGroup.create(500, 840, 'box');
         boxGroup.create(2300, 840, 'box');
          
+         //gears setup
+         gears = game.add.group();
+         gears.enableBody = true;
+         gears.physicsBodyType = Phaser.Physics.ARCADE;
+         gears.create(1000, 820, 'gear');
+         gears.create(1600, 600, 'gear');
+         gears.create(2320, 750, 'gear');
+         
          //zombie setup
         
         zombieGroup = game.add.group();
@@ -64,13 +72,7 @@ test.levelone.prototype = {
          bullets.setAll('checkWorldBounds',  'true');
          bullets.setAll('outOfBoundsKill', true);
          
-         //gears setup
-         gears = game.add.group();
-         gears.enableBody = true;
-         gears.physicsBodyType = Phaser.Physics.ARCADE;
-         gears.create(1000, 820, 'gear');
-         gears.create(1600, 600, 'gear');
-         gears.create(2320, 750, 'gear');
+
          
          //player setup
         player = game.add.sprite(centerX - 700, centerY + 260,'player');
@@ -137,7 +139,7 @@ test.levelone.prototype = {
          
          }
          
-         if (player.x >= 2900) {
+         if (player.x >= 2900 && gearCnt == 3) {
              game.state.start('completionpage');
          }
          
