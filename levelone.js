@@ -1,8 +1,8 @@
 var test = {};
-var centerX = 1500/2, centerY = 1000/2, speed = 6, velocity = 1000;
+var centerX = 1500/2, centerY = 1000/2, speed = 6, velocity = 1000, t;
 var player, player_health = 100, collisionRate = 200, nextDamage = 0, health;
 var zombie, zombieGroup, stepLimit = 150, stepCount = 0;
-var platform, platformGroup, boxGroup;
+var platform, platformGroup, boxGroup, touchObject = false;
 var bullets, bullet, nextFire = 0, fireRate = 200, ammo = 10, gearCnt = 5, ammoScore;
 var gears, gear, gearCnt = 0, gearScore; 
 
@@ -80,7 +80,7 @@ test.levelone.prototype = {
         player.scale.setTo(1.25,1.25);
          
         game.physics.enable([player, platform, platformGroup, boxGroup]);
-        player.body.gravity.y = 300;
+        player.body.gravity.y = 600;
         player.body.collideWorldBounds = true;
          
         player.animations.add('walk', [1,2,3,4]);
@@ -90,9 +90,20 @@ test.levelone.prototype = {
         game.camera.follow(player);
         game.camera.deadzone = new Phaser.Rectangle(centerX - 500, 200, 900,1000);
         
+        
         health = game.add.text(1200,10, 'Robot Health: ' + player_health, {fontSize: 500, fill:'#DA420A'});
+        health.fixedToCamera = true;
+        health.cameraOffset.setTo(1200,10);
+         
         gearScore = game.add.text(1200,40, 'Gears Collected: ' + gearCnt, {fontSize: 500, fill:'#f0ec2b'});
+        gearScore.fixedToCamera = true;
+        gearScore.cameraOffset.setTo(1200,40);
+         
         ammoScore = game.add.text(1200,70, 'Ammo: ' + ammo, {fontSize: 500, fill:'#f0ec2b'});
+        ammoScore.fixedToCamera = true;
+        ammoScore.cameraOffset.setTo(1200,70);
+
+
          
         platform.body.immovable = true;
         platformGroup.setAll('body.immovable', true);
@@ -104,7 +115,9 @@ test.levelone.prototype = {
 
          
          //player mechanics
-         game.physics.arcade.collide(player,[platform, platformGroup, boxGroup]);
+         game.physics.arcade.collide(player,[platform, platformGroup, boxGroup], function() {
+             touchObject = true;
+         });
          
          
         //player controls
@@ -128,7 +141,7 @@ test.levelone.prototype = {
      }
     
          else if (game.input.keyboard.isDown(Phaser.Keyboard.W)) {
-            player.y -= 15;
+            player.body.velocity.y -= 20;
        player.animations.play('jump', 15,false);
         
            }
@@ -168,6 +181,8 @@ test.levelone.prototype = {
          
          //gear mechanics
          game.physics.arcade.overlap(player, gears, this.getGear);
+         
+         touchObject = false;
 
      },
     
@@ -185,6 +200,9 @@ test.levelone.prototype = {
         
         ammoScore.destroy();
         ammoScore = game.add.text(1200,70, 'Ammo: ' + ammo, {fontSize: 500, fill:'#f0ec2b'});
+        ammoScore.fixedToCamera = true;
+        ammoScore.cameraOffset.setTo(1200,70);
+
         }
     },
     
@@ -218,7 +236,9 @@ test.levelone.prototype = {
             player_health -= 10;
     
             health.destroy();
-            health = game.add.text(1200,10, 'Robot Health: ' + player_health, {fontSize: 500, fill:'#DA420A'});
+        health = game.add.text(1200,10, 'Robot Health: ' + player_health, {fontSize: 500, fill:'#DA420A'});
+        health.fixedToCamera = true;
+        health.cameraOffset.setTo(1200,10);
         }
     },
     
@@ -228,11 +248,11 @@ test.levelone.prototype = {
         
         gearScore.destroy();
         gearScore = game.add.text(1200,40, 'Gears Collected: ' + gearCnt, {fontSize: 500, fill:'#f0ec2b'});
+        gearScore.fixedToCamera = true;
+        gearScore.cameraOffset.setTo(1200,40);
         
         
     }
-
-
 
 };
 
