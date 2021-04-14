@@ -17,7 +17,7 @@ test.completionpage.prototype = {
          
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         
-        game.stage.backgroundColor = '#000000'
+        game.stage.backgroundColor = '#000000';
          
    //      var background = game.add.sprite(0,0, 'bg');
          var logo = game.add.sprite(100,500, 'complete');
@@ -28,6 +28,9 @@ test.completionpage.prototype = {
         var gear_1 = game.add.sprite(500,680, 'gear');
         var bullet_1 = game.add.sprite(500,805, 'bullet');
         bullet_1.scale.setTo(4,4);
+         
+        technoMusic.stop();
+        zombieNoises.stop();
 
      },
     
