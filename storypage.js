@@ -12,10 +12,10 @@ test.storypage.prototype = {
       game.stage.backgroundColor = '#000000'
   
 
-    story = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultrices enim sem, quis interdum velit blandit eget. Suspendisse mollis est a lectus dictum ornare. Donec a suscipit magna. Sed mauris turpis, tristique quis ante ut, ullamcorper facilisis nisl. Proin quis orci faucibus, congue nisi ac, imperdiet justo. Donec scelerisque, libero.';
+    story = "It's the year 2100, nuclear warfare has taken over the entire country. Due to the nuclear radiation most of the population become mindless zombies. A select few individuals create a robot which is sent out into this destoyed world and must find a cure for humanity. This is only possible by collecting all the gears that have been scattered around the globe, without the gears humanity will never have the knowledge to defeat this war";
 
 
-    this.spellText(100, 100, 1000, story, 400, 40, '#d2db27', 'Papyrus');
+    this.spellText(100, 100, 1000, story, 4000, 40, '#d2db27', 'Papyrus');
 
   },
   spellText: function(x, y, width, text, fontSize, speed, fill,  font){
@@ -37,6 +37,7 @@ test.storypage.prototype = {
       if (index >= story.length - 1) {
         game.time.events.remove(loop);
         console.log('stop');
+        game.state.start('levelone'); player_health = 100; gearCnt = 0; ammo = 10;
       }
       index++;
     }
