@@ -89,7 +89,7 @@ test.levelone.prototype = {
         player.body.collideWorldBounds = true;
          
         player.animations.add('walk', [1,2,3,4]);
-        player.animations.add('jump', [9,10,11,12,13,14,15,16]);
+        player.animations.add('jump', [14,15,16]);
         player.animations.add('shoot', [17,18]);
         player.animations.add('die',[19,20,21,22,23,24,25,26,27]);
         
@@ -133,7 +133,7 @@ test.levelone.prototype = {
          
          
         //player controls
-         
+        if (game.input.keyboard.isDown(Phaser.Keyboard.A) || game.input.keyboard.isDown(Phaser.Keyboard.W) || game.input.keyboard.isDown(Phaser.Keyboard.D) || game.input.activePointer.isDown){ 
          if (game.input.keyboard.isDown(Phaser.Keyboard.D)) {
         player.x += speed; 
         player.scale.setTo(1.25,1.25);
@@ -141,13 +141,14 @@ test.levelone.prototype = {
         player.animations.play('walk', 12, true);
      }
          
-         else if (game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+         if (game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+             
         player.x -= speed;
         player.scale.setTo(-1.25,1.25);
    
         player.animations.play('walk', 12, true);
      }
-         else if (game.input.activePointer.isDown && ammo > 0) {
+         if (game.input.activePointer.isDown && ammo > 0) {
         //     if ((game.input.mousePointer.x >= player.x && player.scale.x > 0) || (game.input.mousePointer.x <= player.x && player.scale.x < 0)){ 
             var lser = game.add.audio('laser');
             lser.play();
@@ -157,15 +158,15 @@ test.levelone.prototype = {
              
      }
     
-         else if (game.input.keyboard.isDown(Phaser.Keyboard.W)) {
+          if (game.input.keyboard.isDown(Phaser.Keyboard.W)) {
             player.y -= 14;
        player.animations.play('jump', 15,false);
         
-           }
+           } }
 
          else {
             player.animations.stop('walk');
-            player.frame = 0;
+            player.frame = 8;
          
          }
          
