@@ -1,6 +1,6 @@
 
 var level = 3;
-var centerX = 1500/2, centerY = 1000/2, speed = 6, velocity = 1000, t;
+var centerX = 1500/2, centerY = 1000/2, speed = 8, velocity = 1000, t;
 var player, collisionRate = 200, nextDamage = 0, health;
 var zombie, zombieGroup, stepLimit = 150, stepCount = 0;
 var platform, platformGroup, boxGroup, touchObject = false;
@@ -34,7 +34,7 @@ test.levelthree.prototype = {
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
          
         game.stage.backgroundColor = '#3269a8';
-        game.world.setBounds(0,500,3000,1686);
+        game.world.setBounds(0,650,3000,1686);
          
         var background = game.add.sprite(0,0, 'night');
         platform = game.add.sprite(1550,1390, 'platform');
@@ -46,28 +46,32 @@ test.levelthree.prototype = {
          platformGroup.create(975, 1123, 'platform');
          platformGroup.create(1100, 1123, 'platform');
         platformGroup.create(1670, 1390, 'platform');
-         platformGroup.create(2000, 1390, 'platform');
+         platformGroup.create(2055, 1530, 'platform');
+         platformGroup.create(2255, 1530, 'platform');
+         platformGroup.create(2455, 1530, 'platform');
+         platformGroup.create(2650, 1127, 'platform');
+         platformGroup.create(2760, 1127, 'platform');
         boxGroup = game.add.group();
-        boxGroup.create(500, 840, 'box');
-        boxGroup.create(2300, 840, 'box');
+      
+        boxGroup.create(2200, 1400, 'box');
          
          //gears setup
          gears = game.add.group();
          gears.enableBody = true;
          gears.physicsBodyType = Phaser.Physics.ARCADE;
-         gears.create(1000, 820, 'gear');
-         gears.create(1600, 600, 'gear');
-         gears.create(2320, 750, 'gear');
+         gears.create(1100,900, 'gear');
+         gears.create(1630, 1230, 'gear');
+         gears.create(2340, 1450, 'gear');
        25
          //zombie setup
         
         zombieGroup = game.add.group();
         zombieGroup.enableBody = true;
         zombieGroup.physicsBodyType = Phaser.Physics.ARCADE;     
-        zombieGroup.create(700, centerY + 260, 'zombie');
+        zombieGroup.create(1000, centerY + 430, 'zombie');
         zombieGroup.create(1600, 500, 'zombie');
          zombieGroup.create(1600, centerY + 260, 'zombie');
-        zombieGroup.create(2500, centerY + 260, 'zombie');
+        zombieGroup.create(2620, centerY + 260, 'zombie');
         zombieGroup.setAll("body.gravity.y", 400);
         zombieGroup.setAll("body.collideWorldBounds", true);
         zombieGroup.setAll("body.velocity.x", 100);
@@ -180,7 +184,7 @@ test.levelthree.prototype = {
              game.state.start('completionpage');
          }
          
-         if (player_health <= 0) {
+         if (player_health <= 0 || player.y > 1600) {
              player.animations.play('die', 7, false);
            
              game.time.events.add(Phaser.Timer.SECOND * 1, function() {game.state.start('gameover');}, this).autoDestroy = true;
