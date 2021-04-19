@@ -12,6 +12,7 @@ test.completionpage.prototype = {
      create: function() {
          
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+         game.world.setBounds(0,0,3000,1000);
         
         game.stage.backgroundColor = '#000000';
          

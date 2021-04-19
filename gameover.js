@@ -11,7 +11,7 @@ test.gameover.prototype = {
          game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
          
          game.stage.backgroundColor = '#000000';
-          game.world.setBounds(0,0,1500,1000);
+         game.world.setBounds(0,0,3000,1000);
          
          var logo = game.add.sprite(150,400, 'gameover');
          logo.scale.setTo(2,2);
