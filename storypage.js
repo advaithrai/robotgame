@@ -4,18 +4,39 @@ var text;
 test.storypage = function(){};
 test.storypage.prototype = {
   preload: function(){
+      game.load.image('text_1', 'assets/sprites/text_1.png');
+      game.load.image('text_2', 'assets/sprites/text_2.png');
+      game.load.image('text_3', 'assets/sprites/text_3.png');
+      game.load.image('text_5', 'assets/sprites/text_5.png');
+      game.load.image('text_6', 'assets/sprites/text_6.png');
+       game.load.image('text_7', 'assets/sprites/text_7.png');
+       game.load.image('text_8', 'assets/sprites/text_8.png');
+      
+      game.load.image('play', 'assets/sprites/clickplay.png', 248, 13);
 
   },
   create: function(){
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
          
       game.stage.backgroundColor = '#000000'
-  
-
-    story = "It's the year 2100, nuclear warfare has taken over the entire country. Due to the nuclear radiation most of the population become mindless zombies. A select few individuals create a robot which is sent out into this destoyed world and must find a cure for humanity. This is only possible by collecting all the gears that have been scattered around the globe, without the gears humanity will never have the knowledge to defeat this war";
-
-
-    this.spellText(100, 100, 1000, story, 4000, 40, '#d2db27', 'Papyrus');
+   var text_1 = game.add.sprite(30,200, 'text_1');
+   var text_2 = game.add.sprite(30,250, 'text_2');
+   var text_3 = game.add.sprite(25,300, 'text_3');
+    var text_5 = game.add.sprite(350, 'text_5');
+      var text_6 = game.add.sprite(30,400, 'text_6');
+      var text_7 = game.add.sprite(30,500, 'text_7');
+      var text_8 = game.add.sprite(30,550, 'text_8');
+      
+      var playbttn = game.add.button(500,800, 'play', function() { game.state.start('levelone');});
+      
+      
+      text_1.scale.setTo(.8,.8);
+      text_2.scale.setTo(.7,.7);
+      text_3.scale.setTo(1.2,1.2);
+     
+      text_8.scale.setTo(1.2,1.2);
+      playbttn.scale.setTo(1.5,1.5);
+      
 
   },
   spellText: function(x, y, width, text, fontSize, speed, fill,  font){

@@ -166,7 +166,7 @@ test.levelone.prototype = {
 
          else {
             player.animations.stop('walk');
-            player.frame = 8;
+            player.frame = 0;
          
          }
          

@@ -6,4 +6,4 @@ game.state.add('startpage', test.startpage);
 game.state.add('completionpage', test.completionpage);
 game.state.add('storypage', test.storypage);
 game.state.add('gameover', test.gameover);
-game.state.start('levelone');
+game.state.start('levelthree');
