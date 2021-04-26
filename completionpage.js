@@ -7,7 +7,7 @@ test.completionpage.prototype = {
          game.load.image('complete', 'assets/sprites/levelcomplete.png');
          game.load.image('gear', 'assets/sprites/gear.png');
          game.load.image('bullet', 'assets/sprites/bullet.png');
-         game.load.image('play1', 'assets/sprites/play.png');
+         game.load.image('play', 'assets/sprites/play.png');
 
          //game.load.image('nlevel', 'assets/sprites/nextlevel.png');
      },
@@ -34,7 +34,7 @@ test.completionpage.prototype = {
          
          
         //transition between the next levels
-        var playButton1 = game.add.button(500,700, 'play1', function() { game.state.start('leveltwo'); health; gearCnt; ammo;})
+        var playButton1 = game.add.button(700,700, 'play', function() { game.state.start('leveltwo'); health; gearCnt; ammo;})
 
 
      },
