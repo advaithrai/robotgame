@@ -181,7 +181,7 @@ test.levelthree.prototype = {
          }
          
          if (player.x >= 2900 && gearCnt == 9) {
-             game.state.start('completionpage');
+             game.state.start('completionpage2');
          }
          
          if (player_health <= 0 || player.y > 1600) {
