@@ -180,7 +180,7 @@ test.levelthree.prototype = {
          
          }
          
-         if (player.x >= 2900 && gearCnt == 3) {
+         if (player.x >= 2900 && gearCnt == 9) {
              game.state.start('completionpage');
          }
          
