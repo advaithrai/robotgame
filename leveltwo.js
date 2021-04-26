@@ -179,9 +179,9 @@ test.leveltwo.prototype = {
             player.frame = 0;
          
          }
-         
-         if (player.x >= 2900 && gearCnt == 3) {
-             game.state.start('completionpage');
+         //sfsflijslfjdlijfsl
+         if (player.x >= 2900 && gearCnt == 6) {
+             game.state.start('completionpage1');
          }
          
          if (player_health <= 0) {
