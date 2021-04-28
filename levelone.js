@@ -4,7 +4,7 @@ var centerX = 1500/2, centerY = 1000/2, speed = 6, velocity = 1000, t;
 var player, player_health = 100, collisionRate = 200, nextDamage = 0, health;
 var zombie, zombieGroup, stepLimit = 150, stepCount = 0;
 var platform, platformGroup, boxGroup, touchObject = false;
-var bullets, bullet, nextFire = 0, fireRate = 200, ammo = 10, gearCnt = 5, ammoScore;
+var bullets, bullet, nextFire = 0, fireRate = 200, ammo = 15, gearCnt = 5, ammoScore;
 var gears, gear, gearCnt = 0, gearScore;
 var technoMusic, zombieNoises;
 
@@ -246,6 +246,7 @@ test.levelone.prototype = {
     touchEnemy: function(player, enemy) {
         if (game.time.now > nextDamage) {
             nextDamage = game.time.now + collisionRate;
+            if (Math.abs(enemy.x - player.x < 10)) {
             
             if(player.x < enemy.x){
                 player.x -= 100;
@@ -260,6 +261,7 @@ test.levelone.prototype = {
         health = game.add.text(1200,10, 'Robot Health: ' + player_health, {fontSize: 500, fill:'#DA420A'});
         health.fixedToCamera = true;
         health.cameraOffset.setTo(1200,10);
+            }
         }
     },
     

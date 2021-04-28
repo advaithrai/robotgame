@@ -258,6 +258,7 @@ test.leveltwo.prototype = {
     
     touchEnemy: function(player, enemy) {
         if (game.time.now > nextDamage) {
+            if (Math.abs(enemy.x - player.x < 10)) {
             nextDamage = game.time.now + collisionRate;
             
             if(player.x < enemy.x){
@@ -273,6 +274,7 @@ test.leveltwo.prototype = {
         health = game.add.text(1200,10, 'Robot Health: ' + player_health, {fontSize: 500, fill:'#DA420A'});
         health.fixedToCamera = true;
         health.cameraOffset.setTo(1200,10);
+            }
         }
     },
     

@@ -12,6 +12,8 @@ test.gameover.prototype = {
          
          game.stage.backgroundColor = '#000000';
          game.world.setBounds(0,0,3000,1000);
+         technoMusic.stop();
+         zombieNoises.stop();
          
          var logo = game.add.sprite(150,400, 'gameover');
          logo.scale.setTo(2,2);

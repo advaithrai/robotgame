@@ -34,7 +34,7 @@ test.completionpage1.prototype = {
          
          
         //transition between the next levels
-        var playButton1 = game.add.button(700,700, 'play1', function() { game.state.start('levelthree'); health; gearCnt; ammo;})
+        var playButton1 = game.add.button(700,700, 'play1', function() { game.state.start('storypage3'); health; gearCnt; ammo;})
 
 
      },

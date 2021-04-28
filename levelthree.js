@@ -181,7 +181,7 @@ test.levelthree.prototype = {
          }
          
          if (player.x >= 2900 && gearCnt == 9) {
-             game.state.start('completionpage2');
+             game.state.start('completionpage3');
          }
          
          if (player_health <= 0 || player.y > 1600) {
@@ -255,6 +255,7 @@ test.levelthree.prototype = {
     
     touchEnemy: function(player, enemy) {
         if (game.time.now > nextDamage) {
+            if (Math.abs(enemy.x - player.x < 10)) {
             nextDamage = game.time.now + collisionRate;
             
             if(player.x < enemy.x){
@@ -270,6 +271,7 @@ test.levelthree.prototype = {
         health = game.add.text(1200,10, 'Robot Health: ' + player_health, {fontSize: 500, fill:'#DA420A'});
         health.fixedToCamera = true;
         health.cameraOffset.setTo(1200,10);
+            }
         }
     },
     
