@@ -28,7 +28,7 @@ test.levelone.prototype = {
          
      },
     
-     create: function() {
+     create: function() { 
          
          //game setup
         game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;

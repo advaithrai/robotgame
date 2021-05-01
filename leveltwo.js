@@ -80,7 +80,7 @@ test.leveltwo.prototype = {
         zombieGroup.setAll("body.collideWorldBounds", true);
         zombieGroup.setAll("body.velocity.x", 100);
         zombieGroup.setAll("scale.x", -1);
-        zombieGroup.setAll("scale.y", 1);
+        zombieGroup.setAll("scale.y", 1); 
         
         //bullets setup
         bullets = game.add.group();

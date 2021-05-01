@@ -21,7 +21,8 @@ test.finalboss.prototype = {
          game.load.spritesheet('player', 'assets/spritesheets/robotnew.png', 121, 200);
          
          game.load.audio('laser', ['assets/sounds/laser.mp3','assets/sounds/laser.ogg','assets/sounds/laser.wav']);
-
+         game.load.audio('zombies', ['assets/sounds/zombies.mp3','assets/sounds/zombies.wav','assets/sounds/zombies.m4a','assets/sounds/zombies.ogg',]);
+         
          
      },
     
@@ -33,19 +34,65 @@ test.finalboss.prototype = {
         game.stage.backgroundColor = '#3269a8';
         game.world.setBounds(0,0,3000,1000);
          
+         
+        // background
         var background = game.add.sprite(0,0, 'night');
+        //platforms
         platform = game.add.sprite(1550,1390, 'platform');
         platformGroup = game.add.group();
-        platformGroup.create(65, 1325, 'platform');
-    
-             //bullets setup
-         bullets = game.add.group();
-         bullets.enableBody = true;
-         bullets.physicsBodyType = Phaser.Physics.ARCADE;
-         bullets.createMultiple(10,'bullet');
+        platformGroup.create(100, 700, 'platform');
+        //platformGroup.create(300, 600, 'platform');
+        platformGroup.create(420, 300, 'platform');
+        platformGroup.create(800, 700, 'platform');
+        platformGroup.create(2670, 950, 'platform');
          
-         bullets.setAll('checkWorldBounds',  'true');
-         bullets.setAll('outOfBoundsKill', true);
+        platformGroup.create(1200, 300, 'platform');
+        platformGroup.create(1600, 700, 'platform');
+        platformGroup.create(2100, 300, 'platform');
+
+
+
+         
+
+
+
+        //platformGroup.create(200, 500, 'platform');
+        //platformGroup.create(300, 300, 'platform');
+        //platformGroup.create(400, 300, 'platform');
+
+
+        box = game.add.sprite(1550,1390, 'box');
+        boxGroup = game.add.group();
+        //boxGroup.create(300, 840, 'box');
+        //boxGroup.create(410, 840, 'box');
+        //boxGroup.create(370, 720, 'box');
+         
+         
+        //zombie setup
+        /*
+        zombieGroup = game.add.group();
+        zombieGroup.enableBody = true;
+        zombieGroup.physicsBodyType = Phaser.Physics.ARCADE;     
+        zombieGroup.create(700, centerY + 260, 'zombie');
+        zombieGroup.create(1600, 500, 'zombie');
+        zombieGroup.create(1600, centerY + 260, 'zombie');
+        zombieGroup.create(2500, centerY + 260, 'zombie');
+        zombieGroup.setAll("body.gravity.y", 400);
+        zombieGroup.setAll("body.collideWorldBounds", true);
+        zombieGroup.setAll("body.velocity.x", 100);
+        zombieGroup.setAll("scale.x", -1);
+        zombieGroup.setAll("scale.y", 1);
+        */
+         
+    
+        //bullets setup
+        bullets = game.add.group();
+        bullets.enableBody = true;
+        bullets.physicsBodyType = Phaser.Physics.ARCADE;
+        bullets.createMultiple(10,'bullet');
+         
+        bullets.setAll('checkWorldBounds',  'true');
+        bullets.setAll('outOfBoundsKill', true);
 
         
         //player setup
@@ -57,11 +104,20 @@ test.finalboss.prototype = {
         player.body.gravity.y = 600;
         player.body.collideWorldBounds = true; 
          
+        //animations
         player.animations.add('walk', [1,2,3,4]);
         player.animations.add('jump', [14,15,16]);
         player.animations.add('shoot', [17,18]);
         player.animations.add('die',[19,20,21,22,23,24,25,26,27]);
+         
+         
+        //camera 
+        game.camera.follow(player);
+        game.camera.deadzone = new Phaser.Rectangle(centerX - 500, 200, 900,1000);
         
+         
+         
+        //text messages
         health = game.add.text(1200,10, 'Robot Health: ' + player_health, {fontSize: 500, fill:'#DA420A'});
         health.fixedToCamera = true;
         health.cameraOffset.setTo(1200,10);
@@ -74,14 +130,25 @@ test.finalboss.prototype = {
         ammoScore.fixedToCamera = true;
         ammoScore.cameraOffset.setTo(1200,70);
         
-                //gears setup
+         
+         
+         //gears setup
          gears = game.add.group();
          gears.enableBody = true;
          gears.physicsBodyType = Phaser.Physics.ARCADE;
-         gears.create(950, 800, 'gear');
-         gears.create(1000, 800, 'gear');
-         gears.create(900, 800, 'gear');
- 
+         //gears.create(950, 800, 'gear');
+         //gears.create(1000, 800, 'gear');
+         gears.create(450, 100, 'gear');
+         gears.create(1100, 900, 'gear');
+         gears.create(1250, 100, 'gear');
+         gears.create(1680, 900, 'gear');
+         gears.create(2150, 100, 'gear');
+         gears.create(2150, 900, 'gear');
+         gears.create(2600, 900, 'gear');
+
+
+
+
 
 
          
@@ -98,7 +165,8 @@ test.finalboss.prototype = {
 	    globs.setAll('checkWorldBounds', true);
          
          
-        boss = game.add.sprite(centerX + 200, centerY - 100,'boss');
+        //boss
+        boss = game.add.sprite(centerX + 1950, centerY - 100,'boss');
         boss.anchor.setTo(0.5,0.1);
         boss.scale.setTo(4.25,4.25);
         
@@ -118,14 +186,25 @@ test.finalboss.prototype = {
             actionList.push('attack');
         }
          
-         technoMusic.play();
+         
+         
+        platform.body.immovable = true;
+        platformGroup.setAll('body.immovable', true);
+        boxGroup.setAll('body.immovable', true);
+         
+        //music
+        technoMusic.play();
          
         
      },
     
+    
+    
+    
      update: function() {
          
-        game.physics.arcade.collide(player,[platform, platformGroup], function() {
+
+        game.physics.arcade.collide(player,[platform, platformGroup, boxGroup], function() {
              touchObject = true;
          });
         
@@ -167,8 +246,8 @@ test.finalboss.prototype = {
             player.frame = 0;
          
          }
-
-        if (gearScore >= 12) {
+         //gearScore
+        if (gearCnt >= 16) {
              game.state.start('youwin');
          }
          
@@ -185,7 +264,7 @@ test.finalboss.prototype = {
          }
 
          
-         
+         //how fast the boss fires bullets
          if (actionTimer >= 190) {
              actionTimer = 0;       
          }
@@ -196,7 +275,8 @@ test.finalboss.prototype = {
                 if (glob) {
 		              glob.reset(boss.x, boss.y + 400);
                       glob.scale.setTo(2.25,2.25);
-		              glob.body.velocity.x = -500;
+                    //orginally -500 but wanted to make it more challenging 
+		              glob.body.velocity.x = -880;
                      
 	           }
 
@@ -209,7 +289,12 @@ test.finalboss.prototype = {
         game.physics.arcade.overlap(globs, player, this.hitPlayer);
         game.physics.arcade.overlap(player, gears, this.getGear);
 
-     },
+    },
+    
+    
+        
+    
+
     
         fire: function() {
         if(game.time.now > nextFire) {
@@ -238,7 +323,7 @@ test.finalboss.prototype = {
         bullet.kill();}
     },
     
-    hitPlayer: function() {
+        hitPlayer: function() {
         if (glob.x - player.x < 10) {
         console.log(player_health);
         player_health -= 10;
