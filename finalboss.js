@@ -44,7 +44,7 @@ test.finalboss.prototype = {
         //platformGroup.create(300, 600, 'platform');
         platformGroup.create(420, 300, 'platform');
         platformGroup.create(800, 700, 'platform');
-        platformGroup.create(2670, 950, 'platform');
+        platformGroup.create(2500, 950, 'platform');
          
         platformGroup.create(1200, 300, 'platform');
         platformGroup.create(1600, 700, 'platform');
@@ -122,6 +122,10 @@ test.finalboss.prototype = {
         health.fixedToCamera = true;
         health.cameraOffset.setTo(1200,10);
          
+        health_e = game.add.text(100,10, 'Boss Health: ' + bossHealth, {fontSize: 500, fill:'#DA420A'});
+        health_e.fixedToCamera = true;
+        health_e.cameraOffset.setTo(100,10);
+         
         gearScore = game.add.text(1200,40, 'Gears Collected: ' + gearCnt, {fontSize: 500, fill:'#f0ec2b'});
         gearScore.fixedToCamera = true;
         gearScore.cameraOffset.setTo(1200,40);
@@ -166,7 +170,7 @@ test.finalboss.prototype = {
          
          
         //boss
-        boss = game.add.sprite(centerX + 1950, centerY - 100,'boss');
+        boss = game.add.sprite(centerX + 1800, centerY - 100,'boss');
         boss.anchor.setTo(0.5,0.1);
         boss.scale.setTo(4.25,4.25);
         
@@ -320,7 +324,15 @@ test.finalboss.prototype = {
         if (bullet.x > 950) {
         boss.animations.play('damage', 2, false);
         bossHealth -= 10;
-        bullet.kill();}
+        bullet.kill();
+            
+        health_e.destroy();
+        health_e = game.add.text(100,10, 'Boss Health: ' + bossHealth, {fontSize: 500, fill:'#DA420A'});
+        health_e.fixedToCamera = true;
+        health_e.cameraOffset.setTo(100,10);
+        
+        }
+            
     },
     
         hitPlayer: function() {
