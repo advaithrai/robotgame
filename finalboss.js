@@ -44,7 +44,7 @@ test.finalboss.prototype = {
         //platformGroup.create(300, 600, 'platform');
         platformGroup.create(420, 300, 'platform');
         platformGroup.create(800, 700, 'platform');
-        platformGroup.create(2500, 950, 'platform');
+        //platformGroup.create(centerX + 1300, 700, 'platform');
          
         platformGroup.create(1200, 300, 'platform');
         platformGroup.create(1600, 700, 'platform');
@@ -135,7 +135,8 @@ test.finalboss.prototype = {
          gears.create(1680, 900, 'gear');
          gears.create(2150, 100, 'gear');
          gears.create(2150, 900, 'gear');
-         gears.create(2600, 900, 'gear');
+         gears.create(2175, 900, 'gear');
+         //gears.create(2600, 900, 'gear');
 
 
 
@@ -157,7 +158,7 @@ test.finalboss.prototype = {
          
          
         //boss
-        boss = game.add.sprite(centerX + 1800, centerY - 100,'boss');
+        boss = game.add.sprite(centerX + 1400, centerY-50,'boss');
         boss.anchor.setTo(0.5,0.1);
         boss.scale.setTo(4.25,4.25);
         
