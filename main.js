@@ -14,4 +14,5 @@ game.state.add('finalboss', test.finalboss);
 game.state.add('storypage2', test.storypage2);
 game.state.add('storypage3', test.storypage3);
 game.state.add('storypage4', test.storypage4);
+game.state.add('storypage5', test.storypage5);
 game.state.start('startpage');

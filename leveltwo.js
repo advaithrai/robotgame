@@ -73,9 +73,9 @@ test.leveltwo.prototype = {
         zombieGroup.enableBody = true;
         zombieGroup.physicsBodyType = Phaser.Physics.ARCADE;     
         zombieGroup.create(600, centerY + 90, 'zombie');
-        zombieGroup.create(1700, centerY + 90, 'zombie');
-        zombieGroup.create(2300, centerY + 90, 'zombie');
+        zombieGroup.create(1800, centerY + 90, 'zombie');
         zombieGroup.create(2400, centerY + 90, 'zombie');
+        zombieGroup.create(2500, centerY + 90, 'zombie');
         zombieGroup.setAll("body.gravity.y", 400);
         zombieGroup.setAll("body.collideWorldBounds", true);
         zombieGroup.setAll("body.velocity.x", 100);
@@ -90,6 +90,8 @@ test.leveltwo.prototype = {
          
         bullets.setAll('checkWorldBounds',  'true');
         bullets.setAll('outOfBoundsKill', true);
+         bullets.setAll("scale.x", 2);
+        bullets.setAll("scale.y", 2);
          
 
         //player setup
@@ -227,8 +229,13 @@ test.leveltwo.prototype = {
         bullet = bullets.getFirstDead();
         bullet.reset(player.x + 35, player.y + 127);
         
-        game.physics.arcade.moveToPointer(bullet, velocity);
-        bullet.rotation = game.physics.arcade.angleToPointer(bullet);
+        if (player.scale.x > 0) {
+        bullet.body.velocity.x += 1000;
+        }
+        else {
+            bullet.body.velocity.x -= 1000;
+        }
+
         
         ammo -= 1;
         
@@ -239,7 +246,7 @@ test.leveltwo.prototype = {
 
         }
     },
-    
+   
     
     hitEnemy: function(){
    //     console.log('hit');

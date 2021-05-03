@@ -68,22 +68,7 @@ test.finalboss.prototype = {
         //boxGroup.create(370, 720, 'box');
          
          
-        //zombie setup
-        /*
-        zombieGroup = game.add.group();
-        zombieGroup.enableBody = true;
-        zombieGroup.physicsBodyType = Phaser.Physics.ARCADE;     
-        zombieGroup.create(700, centerY + 260, 'zombie');
-        zombieGroup.create(1600, 500, 'zombie');
-        zombieGroup.create(1600, centerY + 260, 'zombie');
-        zombieGroup.create(2500, centerY + 260, 'zombie');
-        zombieGroup.setAll("body.gravity.y", 400);
-        zombieGroup.setAll("body.collideWorldBounds", true);
-        zombieGroup.setAll("body.velocity.x", 100);
-        zombieGroup.setAll("scale.x", -1);
-        zombieGroup.setAll("scale.y", 1);
-        */
-         
+
     
         //bullets setup
         bullets = game.add.group();
@@ -93,6 +78,8 @@ test.finalboss.prototype = {
          
         bullets.setAll('checkWorldBounds',  'true');
         bullets.setAll('outOfBoundsKill', true);
+        bullets.setAll("scale.x", 2);
+        bullets.setAll("scale.y", 2);
 
         
         //player setup
@@ -300,15 +287,20 @@ test.finalboss.prototype = {
     
 
     
-        fire: function() {
+    fire: function() {
         if(game.time.now > nextFire) {
         nextFire = game.time.now + fireRate;
      //   console.log("fire");
         bullet = bullets.getFirstDead();
-        bullet.reset(player.x + 35, player.y + 160);
+        bullet.reset(player.x + 35, player.y + 127);
         
-        game.physics.arcade.moveToPointer(bullet, velocity);
-        bullet.rotation = game.physics.arcade.angleToPointer(bullet);
+        if (player.scale.x > 0) {
+        bullet.body.velocity.x += 1000;
+        }
+        else {
+            bullet.body.velocity.x -= 1000;
+        }
+
         
         ammo -= 1;
         

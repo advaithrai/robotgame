@@ -51,6 +51,8 @@ test.levelthree.prototype = {
          platformGroup.create(2455, 1530, 'platform');
          platformGroup.create(2650, 1127, 'platform');
          platformGroup.create(2760, 1127, 'platform');
+         
+ 
         boxGroup = game.add.group();
       
         boxGroup.create(2200, 1400, 'box');
@@ -69,9 +71,9 @@ test.levelthree.prototype = {
         zombieGroup.enableBody = true;
         zombieGroup.physicsBodyType = Phaser.Physics.ARCADE;     
         zombieGroup.create(1000, centerY + 430, 'zombie');
-        zombieGroup.create(1600, 500, 'zombie');
+        zombieGroup.create(2450, 500, 'zombie');
          zombieGroup.create(1600, centerY + 260, 'zombie');
-        zombieGroup.create(2620, centerY + 260, 'zombie');
+        zombieGroup.create(2590, centerY + 260, 'zombie');
         zombieGroup.setAll("body.gravity.y", 400);
         zombieGroup.setAll("body.collideWorldBounds", true);
         zombieGroup.setAll("body.velocity.x", 100);
@@ -86,7 +88,8 @@ test.levelthree.prototype = {
          
          bullets.setAll('checkWorldBounds',  'true');
          bullets.setAll('outOfBoundsKill', true);
-         
+        bullets.setAll("scale.x", 2);
+        bullets.setAll("scale.y", 2);
 
          
          //player setup
@@ -184,6 +187,8 @@ test.levelthree.prototype = {
              game.state.start('completionpage3');
          }
          
+
+         
          if (player_health <= 0 || player.y > 1600) {
              player.animations.play('die', 7, false);
            
@@ -224,8 +229,13 @@ test.levelthree.prototype = {
         bullet = bullets.getFirstDead();
         bullet.reset(player.x + 35, player.y + 127);
         
-        game.physics.arcade.moveToPointer(bullet, velocity);
-        bullet.rotation = game.physics.arcade.angleToPointer(bullet);
+        if (player.scale.x > 0) {
+        bullet.body.velocity.x += 1000;
+        }
+        else {
+            bullet.body.velocity.x -= 1000;
+        }
+
         
         ammo -= 1;
         
