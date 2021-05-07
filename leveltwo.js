@@ -1,5 +1,5 @@
 var level = 2;
-var centerX = 1500/2, centerY = 1000/2, speed = 8, velocity = 1000, t;
+var centerX = 1500/2, centerY = 1000/2, speed = 6, velocity = 1000, t;
 var player, collisionRate = 200, nextDamage = 0, health;
 var zombie, zombieGroup, stepLimit = 150, stepCount = 0;
 var platform, platformGroup, boxGroup, touchObject = false;
@@ -13,9 +13,11 @@ test.leveltwo.prototype = {
     
      preload: function(){
          game.load.image('highway', 'assets/backgrounds/highway.png');
-         game.load.image('platform', 'assets/sprites/platform.png');
+         game.load.image('platform', 'assets/sprites/platformhighway.png');
+         game.load.image('platformbus', 'assets/sprites/platformbus.png');
          game.load.image('gear', 'assets/sprites/gear.png');
-         game.load.image('box', 'assets/sprites/box.png');
+         game.load.image('box', 'assets/sprites/car.png');
+         game.load.image('bus', 'assets/sprites/bus.png');
          
          game.load.spritesheet('player', 'assets/spritesheets/robotnew.png', 121, 200);
          game.load.spritesheet('zombie', 'assets/spritesheets/zombie.png', 120, 191);
@@ -33,7 +35,7 @@ test.leveltwo.prototype = {
          
         game.stage.backgroundColor = '#3269a8';
         game.world.setBounds(0,0,3000,1000);
-         
+        
         var background = game.add.sprite(0,0, 'highway');
         
         platform = game.add.sprite(1700, 780, 'platform');
@@ -54,28 +56,38 @@ test.leveltwo.prototype = {
         platformGroup.create(2900, 780, 'platform');
         platformGroup.create(3000, 780, 'platform');
         
+        bus = game.add.sprite(400, 480, 'bus');
+        platformGroup.create(400, 480, 'platformbus');
+        platformGroup.create(600, 480, 'platformbus');
+        platformGroup.create(800, 480, 'platformbus');
+        
+        bus2 = game.add.sprite(2200, 480, 'bus');
+        platformGroup.create(2200, 480, 'platformbus');
+        platformGroup.create(2400, 480, 'platformbus');
+        platformGroup.create(2600, 480, 'platformbus');
+        
         boxGroup = game.add.group();
-        boxGroup.create(300, 640, 'box');
-        boxGroup.create(2100, 640, 'box');
+        boxGroup.create(200, 640, 'box');
+        boxGroup.create(1900, 640, 'box');
         boxGroup.create(2800, 640, 'box');
          
         //gears setup
         gears = game.add.group();
         gears.enableBody = true;
         gears.physicsBodyType = Phaser.Physics.ARCADE;
-        gears.create(550, 670, 'gear');
-        gears.create(2130, 550, 'gear');
-        gears.create(2830, 550, 'gear');
+        gears.create(750, 670, 'gear');
+        gears.create(2500, 380, 'gear');
+        gears.create(2600, 670, 'gear');
          
         //zombie setup
         
         zombieGroup = game.add.group();
         zombieGroup.enableBody = true;
         zombieGroup.physicsBodyType = Phaser.Physics.ARCADE;     
-        zombieGroup.create(600, centerY + 90, 'zombie');
-        zombieGroup.create(1800, centerY + 90, 'zombie');
+        zombieGroup.create(600, 290, 'zombie');
+        zombieGroup.create(2400, 290, 'zombie');
+        zombieGroup.create(700, centerY + 90, 'zombie');
         zombieGroup.create(2400, centerY + 90, 'zombie');
-        zombieGroup.create(2500, centerY + 90, 'zombie');
         zombieGroup.setAll("body.gravity.y", 400);
         zombieGroup.setAll("body.collideWorldBounds", true);
         zombieGroup.setAll("body.velocity.x", 100);
@@ -90,7 +102,7 @@ test.leveltwo.prototype = {
          
         bullets.setAll('checkWorldBounds',  'true');
         bullets.setAll('outOfBoundsKill', true);
-         bullets.setAll("scale.x", 2);
+        bullets.setAll("scale.x", 2);
         bullets.setAll("scale.y", 2);
          
 
@@ -128,7 +140,7 @@ test.leveltwo.prototype = {
         platform.body.immovable = true;
         platformGroup.setAll('body.immovable', true);
         boxGroup.setAll('body.immovable', true);
-         
+    
         technoMusic = game.add.audio('techno');
         technoMusic.play();
         zombieNoises = game.add.audio('zombies');
@@ -181,7 +193,8 @@ test.leveltwo.prototype = {
             player.frame = 0;
          
          }
-         //sfsflijslfjdlijfsl
+         
+         
          if (player.x >= 2900 && gearCnt == 6) {
              game.state.start('completionpage1');
          }
